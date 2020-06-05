@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script>
+function tempAlert(msg,duration)
+{
+     var el = document.createElement("div");
+     el.setAttribute("style","border: 2px solid red;border-radius: 5px;position:absolute;top:40%;left:20%;background-color:grey;opacity: 0.4; height: 200px;width: 500px;");
+     el.innerHTML = msg;
+     setTimeout(function(){
+      el.parentNode.removeChild(el);
+     },duration);
+     document.body.appendChild(el);
+}
+
+
+</script>
+</head>
+<body>
+
+
+
+
+<div id="d" onclick="tempAlert('close',500)" >alert</div>
+
+</body>
+</html>
