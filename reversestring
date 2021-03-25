@@ -5,3 +5,7 @@ function rvrString(str) {
     return rvrString(str.substr(1)) + str.charAt(0);
 }
 reverseString("paul");
+
+function reverseString(str) {
+  return (str === '') ? '' : reverseString(str.substr(1)) + str.charAt(0);
+}
