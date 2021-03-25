@@ -1,0 +1,7 @@
+function rvrString(str) {
+  if (str === "")
+    return "";
+  else
+    return rvrString(str.substr(1)) + str.charAt(0);
+}
+reverseString("paul");
