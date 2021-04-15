@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>My Heading</h2>
+
+<p>Memozation</p>
+
+
+
+<script>
+const previousvalue = [];
+function squares(n) {  
+
+
+if(previousvalue[n] != null) {
+return previousvalue[n];
+}
+ 
+let result = 0; 
+for(i=0;i<n;i++) { 
+  for(j=0;j<n;j++){ result +=1 }
+  }   
+  
+  previousvalue[n] = result; 
+  return result
+ }
+
+
+
+</script>
+<button id="demo" onclick= "alert(squares(8))"></button>
+ 
+</body>
+</html>
