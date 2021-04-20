@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+
+
+<script>
+
+
+function addFunction() {
+  var table = document.getElementById("textbox");
+  var rowlen = table.rows.length;
+  var row = table.insertRow(rowlen);
+  row.id = rowlen;
+  var arr = ['textboxfiled'];
+    var brr = ['textboxfiledname'];
+
+  for (i = 0; i < 2; i++) {
+    var x = row.insertCell(i)
+    if (i == 1) {
+      x.innerHTML = "<input type='button' onclick='removeCell(" + row.id + ")' value='X'>"
+    } else {
+      x.innerHTML = "<input type='textbox' name='" + brr[i]+row.id + "'><input type='textbox' name='" + arr[i]+row.id + "'>"
+    }
+  }
+}
+
+function removeCell(rowid) {
+  var table = document.getElementById(rowid).remove();
+}
+</script>
+
+
+ 
+  <table id="textbox">
+    <tr>
+      <td>
+      </td>
+    </tr>
+  </table>
+          <input type="button" onclick="addFunction()" value="+" />
+          <input type="button" onclick="getvFunction()" value="SetParameter" />
+
+</body>
+</html>
