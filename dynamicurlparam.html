@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+	<script>
+	var listt;
+	var listt2;
+
+	function addFunction(keyParam, ValueParam) {
+		console.log(keyParam + "," + ValueParam);
+		var table = document.getElementById("textbox");
+		var rowlen = table.rows.length;
+		var row = table.insertRow(rowlen);
+		row.id = rowlen;
+		var arr = ['textboxfiled'];
+		var brr = ['textboxfiledname'];
+		for(i = 0; i < 2; i++) {
+			var x = row.insertCell(i)
+			if(i == 1) {
+				x.innerHTML = "<input type='button' onclick='removeCell(" + row.id + ")' value='X'>"
+			} else {
+				x.innerHTML = "<input type='textbox' id='" + brr[i] + row.id + "' name='" + brr[i] + row.id + "'><input type='textbox' id='" + arr[i] + row.id + "' name='" + arr[i] + row.id + "'>"
+				document.getElementById(brr[i] + row.id).value = keyParam;
+				document.getElementById(arr[i] + row.id).value = ValueParam;
+			}
+		}
+	}
+
+	function removeCell(rowid) {
+		var table = document.getElementById(rowid).remove();
+	}
+
+	function getvFunction() {
+		var map = new Map();
+		// GET ALL THE INPUT ELEMENTS.
+		var ele = document.getElementById('textbox').getElementsByTagName("input");
+		listt = getAllUrlParams(document.getElementById('paul').value);
+		var ss = '';
+		const keyValue = (input) => Object.entries(input).forEach(([key, value]) => {
+			ss = ss + ('&' + key + '=' + value);
+			//console.log(ss)
+		});
+		keyValue(listt);
+		console.log(ss);
+		myFunction();
+		//console.log(getAllUrlParams(document.getElementById('paul').value));
+	}
+
+	function myFunction() {
+		var myMap = new Map()
+		var ssss = [];
+		var ele = document.getElementById("textbox").getElementsByTagName("tr");
+		for(i = 0; i < ele.length; i++) {
+			//console.log(ele[i].getElementsByTagName("input"));
+			var sss = ele[i].getElementsByTagName("input");
+			for(j = 0; j < sss.length; j++) {
+				if(sss[j].type == 'text') {
+					//console.log(sss[j].value);
+					ssss.push(sss[j].value);
+				}
+			}
+			if(ssss[0] || ssss[1]) {
+				myMap.set(ssss[0], ssss[1]);
+			}
+			ssss = [];
+		}
+		console.log(myMap)
+		var urlparam = '';
+		for(let [key, value] of myMap) {
+			if(!(key in listt)) {
+				urlparam = urlparam + ('&' + key + '=' + value);
+				console.log(key + ' = ' + value)
+			}
+		}
+		var existingurl = document.getElementById('paul').value;
+		if(existingurl) {
+			existingurl = existingurl + urlparam;
+			document.getElementById('paul').value = existingurl;
+		}
+	}
+
+	function getAllUrlParams(url) {
+		// get query string from url (optional) or window
+		var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+		// we'll store the parameters here
+		var obj = {};
+		// if query string exists
+		if(queryString) {
+			// stuff after # is not part of query string, so get rid of it
+			queryString = queryString.split('#')[0];
+			// split our query string into its component parts
+			var arr = queryString.split('&');
+			for(var i = 0; i < arr.length; i++) {
+				// separate the keys and the values
+				var a = arr[i].split('=');
+				// set parameter name and value (use 'true' if empty)
+				var paramName = a[0];
+				var paramValue = typeof(a[1]) === 'undefined' ? true : a[1];
+				// (optional) keep case consistent
+				paramName = paramName.toLowerCase();
+				if(typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
+				// if the paramName ends with square brackets, e.g. colors[] or colors[2]
+				if(paramName.match(/\[(\d+)?\]$/)) {
+					// create key if it doesn't exist
+					var key = paramName.replace(/\[(\d+)?\]/, '');
+					if(!obj[key]) obj[key] = [];
+					// if it's an indexed array e.g. colors[2]
+					if(paramName.match(/\[\d+\]$/)) {
+						// get the index value and add the entry at the appropriate position
+						var index = /\[(\d+)\]/.exec(paramName)[1];
+						obj[key][index] = paramValue;
+					} else {
+						// otherwise add the value to the end of the array
+						obj[key].push(paramValue);
+					}
+				} else {
+					// we're dealing with a string
+					if(!obj[paramName]) {
+						// if it doesn't exist, create property
+						obj[paramName] = paramValue;
+					} else if(obj[paramName] && typeof obj[paramName] === 'string') {
+						// if property does exist and it's a string, convert it to an array
+						obj[paramName] = [obj[paramName]];
+						obj[paramName].push(paramValue);
+					} else {
+						// otherwise add the property
+						obj[paramName].push(paramValue);
+					}
+				}
+			}
+		}
+		return obj;
+	}
+
+	function valueeee() {
+		alert('paul');
+		listt2 = getAllUrlParams(document.getElementById('paul').value);
+		const keyValue = (input) => Object.entries(input).forEach(([key, value]) => {
+			addFunction(key, value);
+		});
+		if(listt2) {
+			keyValue(listt2);
+		}
+	}
+	</script>
+	<table id="textbox">
+		<tr>
+			<td> </td>
+		</tr>
+	</table>
+	<input type="button" onclick="addFunction('','')" value="+" />
+	<div>
+		<input type="button" onclick="getvFunction()" value="SetParameter" /> </div>
+	<div>
+		<input type="textbox" id="paul" style="
+    width: 700px;
+    height: 400px;" onkeyup="valueeee()" /> </div>
+</body>
+
+</html>
